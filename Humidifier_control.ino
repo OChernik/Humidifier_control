@@ -46,28 +46,19 @@ void setup() {
   attachInterrupt(1, encChange, CHANGE);  // прерывание на пин D3 с крутилки енкодера
 }
 
-void loop() {
-    
+void loop() {    
   // если енкодером было изменено минимальное или максимальное значение влажности
-  if(humMinChange || humMaxChange){
-    showScreen();                  // выводим переменные на дисплей 
-    humMinChange = 0;              // сбрасываем флаг изменения минимального значения влажности
-    humMaxChange = 0;              // сбрасываем флаг изменения максимального значения влажности
+  if(humMinChange || humMaxChange){    
+    humMinChange = 0;                           // сбрасываем флаг изменения минимального значения влажности
+    humMaxChange = 0;                           // сбрасываем флаг изменения максимального значения влажности
+    showScreen();                               // выводим переменные на дисплей 
   } // end if
 
-  if (millis() - tmr >= period){   // если пришло время считать данные с датчика
-      tmr = millis();              // сброс таймера
-
-      if ((hdc1080.readTemperature() != temperature)) {  // если измеренная температура изменилась
-       temperature = hdc1080.readTemperature();  // сохраняем измененное значение температуры
-       showScreen();                             // выводим переменные на дисплей 
-      } // end if
-
-      if ((hdc1080.readHumidity() != humGet)) {  // если измеренная влажность изменилась
-       humGet = hdc1080.readHumidity();          // сохраняем измененное значение влажности
-       showScreen();                             // выводим переменные на дисплей 
-      } // end if
-      
+  if (millis() - tmr >= period){                // если пришло время считать данные с датчика
+      tmr = millis();                           // сброс таймера
+      temperature = hdc1080.readTemperature();  // сохраняем текущее значение температуры
+      humGet = hdc1080.readHumidity();          // сохраняем текущее значение влажности
+      showScreen();                             // выводим переменные на дисплей     
   }  // end if 
 
   if (!relayState && (humGet < humMin)) {        // проверка условий для включения реле
@@ -90,21 +81,21 @@ void showScreen() {
     oled.clear();                // очищаем дисплей
     oled.setCursor(0, 0);        // курсор на начало 1 строки
     if(!Screen){                 // если Screen = 0, выводим значение минимальной влажности
-        oled.print("ВлMin ");    // вывод ВлMin 
+        oled.print("ВлMin ");    // вывод на экран "ВлMin" 
         oled.print(humMin);      // вывод значения минимальной влажности     
     } // end if
     if(Screen){                  // если Screen = 1, выводим значение максимальной влажности
-        oled.print("ВлMax ");    // вывод ВлMax 
+        oled.print("ВлMax ");    // вывод на экран "ВлMax" 
         oled.print(humMax);      // вывод значения максимальной влажности     
     } // end if   
     oled.setCursor(0, 2);        // курсор на начало 2 строки
-    oled.print("ВлИзм ");        // вывод ВлИзм 
+    oled.print("ВлИзм ");        // вывод на экран "ВлИзм" 
     oled.print(humGet);          // вывод значения ВлИзм
     oled.setCursor(0, 4);        // курсор на начало 3 строки
-    oled.print("Темп  ");        // вывод Темп
+    oled.print("Темп  ");        // вывод на экран "Темп"
     oled.print(temperature);     // вывод значения Т.
     oled.setCursor(0, 6);        // курсор на начало 4 строки
-    oled.print("Реле  ");        // вывод Реле 
+    oled.print("Реле  ");        // вывод на экран "Реле" 
     if (!relayState) oled.print("Выкл");  // вывод значения реле
     if (relayState) oled.print("Вкл ");   // вывод значения реле
     oled.update();    // Вывод содержимого буфера на дисплей. Только при работе с буфером.
