@@ -44,7 +44,7 @@ void setup() {
   // описываем прерывания соответствующие пинам енкодера и процедуру обработчик прерываний  
   attachInterrupt(0, encChange, CHANGE);  // прерывание на пин D2 с крутилки енкодера
   attachInterrupt(1, encChange, CHANGE);  // прерывание на пин D3 с крутилки енкодера
-  enc.setEncISR(true);                    // нужно для корректной работы EncButton v3.0
+  enc.setEncISR(true);                    // для работы с обработчиком прерываний EncButton v3.0
 }
 
 void loop() {  
