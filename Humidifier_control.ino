@@ -20,7 +20,7 @@
 // Объекты и переменные
 EncButton enc(encodA, encodB, encodKEY);      //создание объекта енкодера enc и инициализация пинов с кнопкой EncButton v3.x
 // GyverOLED<SSH1106_128x64> oled;            //создание объекта экрана oled для экрана SSH1106 1,3''
-GyverOLED<SSD1306_128x64, OLED_BUFFER> oled;  //создание объекта экрана oled для экрана SSH1106 1,3''
+GyverOLED<SSD1306_128x64, OLED_BUFFER> oled;  //создание объекта экрана oled для экрана SSH1306 0,9''
 ClosedCube_HDC1080 hdc1080;         // создание объекта датчика температуры и влажности HDC1080
 float temperature;                  // температура измеренная
 float humGet;                       // влажность измеренная
