@@ -10,6 +10,7 @@
 #define encodB 3    // пин В энкодера
 #define encodKEY 4  // пин KEY энкодера
 #define period 2000 // период между опросом датчика в мс
+#define EB_FAST_TIME 150  // таймаут быстрого поворота (энкодер)
 
 // Библиотеки
 #include <EncButton.h>          //библиотека енкодера v3.x
