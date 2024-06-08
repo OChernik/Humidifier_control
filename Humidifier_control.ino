@@ -3,7 +3,8 @@
 // Датчики температуры и влажности HDC1080, BMP280, BME280, SHT31
 // SDA - A4, SCL - A5
 // Энкодер A - D2, B - D3, Key - D4
-// Реле - 8
+// Реле - 8. При использовании реле логика включения обычно обратная, HIGH выключает
+// Лучше использовать модуль Mosfet. В этом случае логика прямая, HIGH включает
 
 // Настройки
 #define relayPin 8  // пин реле
@@ -47,6 +48,8 @@ void setup() {
   oled.textMode(BUF_REPLACE);  // вывод текста на экран с заменой символов
   oled.init();                 // инициализация дисплея
   oled.setScale(2);            // масштаб текста (1..4)
+  oled.flipH(true);            // true/false - отзеркалить по горизонтали (для переворота экрана)
+  oled.flipV(true);            // true/false - отзеркалить по вертикали (для переворота экрана)
   pinMode(relayPin, OUTPUT);   // инициализация пина реле как выход 
   digitalWrite(relayPin, LOW); // начальный сигнал на реле
   // описываем прерывания соответствующие пинам енкодера и процедуру обработчик прерываний  
@@ -81,13 +84,15 @@ void loop() {
   }  // end if 
 
   if (!relayState && (humGet < humMin)) {      // проверка условий для включения реле
-    digitalWrite(relayPin, LOW);               // включаем реле (реле обращенное, LOW включает)
+    digitalWrite(relayPin, HIGH);              // включаем мосфет (HIGH включает)
+    // digitalWrite(relayPin, LOW);            // включаем реле (реле обращенное, LOW включает)
     relayState = 1;                            // поднимаем флаг, что реле включено
     showScreen();                              // выводим переменные на дисплей 
   } // end if
 
   if (relayState && (humGet > humMax)) {       // проверка условий для отключения реле
-    digitalWrite(relayPin, HIGH);              // выключаем реле (реле обращенное, HIGH выключает)
+    digitalWrite(relayPin, LOW);               // выключаем мосфет (LOW выключает)
+    // digitalWrite(relayPin, HIGH);           // выключаем реле (реле обращенное, HIGH выключает)
     relayState = 0;                            // опускаем флаг, что реле включено
     showScreen();                              // выводим переменные на дисплей 
   } // end if
