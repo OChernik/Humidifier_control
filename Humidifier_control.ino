@@ -116,10 +116,10 @@ void showScreen() {
     } // end if   
     oled.setCursor(0, 2);     // курсор на начало 2 строки
     oled.print("ВлИзм ");     // вывод на экран "ВлИзм" 
-    oled.print(humGet);       // вывод значения ВлИзм
+    oled.print(humGet, 1);    // вывод значения ВлИзм с 1 знаком после запятой
     oled.setCursor(0, 4);     // курсор на начало 3 строки
     oled.print("Темп  ");     // вывод на экран "Темп"
-    oled.print(temperature);  // вывод значения Т.
+    oled.print(temperature, 1); // вывод значения Т с 1 знаком после запятой
     oled.setCursor(0, 6);     // курсор на начало 4 строки
     oled.print("Реле  ");     // вывод на экран "Реле" 
     if (!relayState) oled.print("Выкл"); // вывод значения реле
