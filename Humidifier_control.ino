@@ -54,6 +54,7 @@ void setup() {
   pinMode(relayPin, OUTPUT);   // инициализация пина реле как выход 
   digitalWrite(relayPin, LOW); // начальный сигнал на реле или мосфет
   // описываем прерывания соответствующие пинам енкодера и процедуру обработчик прерываний  
+  // для esp32 используем digitalPinToInterrupt(PIN) или просто номер пина? - попробовать
   attachInterrupt(0, encChange, CHANGE);  // прерывание на пин D2 с крутилки енкодера
   attachInterrupt(1, encChange, CHANGE);  // прерывание на пин D3 с крутилки енкодера
   enc.setEncISR(true);                    // требуется для работы с обработчиком прерываний EncButton v3.0
@@ -128,6 +129,8 @@ void showScreen() {
 } // end showScreen
 
 // Процедура обработчик прерываний с енкодера
+// для ESP32 должно быть
+// IRAM_ATTR void encChange() {
 void encChange() {  
      enc.tickISR();                 
 } // end encChange
